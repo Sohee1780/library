@@ -10,19 +10,18 @@
 <body>
 
 <header>
-	
-	
-
 	<!-- 어드민 -->
 	<c:if test="${sessionScope.adminYN eq 'Y'}" var="res">
 		<div>로고</div>
 		<div>
 			<a href="">도서관리</a>
-			<a href="">사용자관리</a>
 		</div>
+		<a href="">사용자관리</a>
 		<div>로그아웃</div>
 	</c:if>
+	<!-- 어드민 끝 -->
 	
+	<!-- 사용자 -->
 	<c:if test="${not res }">
 		<div>로고</div>
 		<div>
@@ -30,12 +29,12 @@
 		</div>
 		<a href="">마이페이지</a>
 		
-		<!-- 로그인 전 사용자 -->
+		<!-- 로그인 전-->
 		<c:if test="${empty sessionScope.userId }" var="res1">
 			<div>로그인</div>
 		</c:if>
 		
-		<!-- 사용자 -->
+		<!-- 로그인 후 -->
 		<c:if test="${not res1}">
 			<div>로그아웃</div>
 		</c:if>
