@@ -36,6 +36,7 @@
 		    <a href="">회원가입</a>
 		    <a href="">ID찾기</a>
 		    <a href="">PW찾기</a>
+		 
 		</div>
 	</form>	
 	</div>
