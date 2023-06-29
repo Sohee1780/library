@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<aside id='rightside'>
@@ -36,7 +35,6 @@
 		    <a href="">회원가입</a>
 		    <a href="">ID찾기</a>
 		    <a href="">PW찾기</a>
-		 
 		</div>
 	</form>	
 	</div>

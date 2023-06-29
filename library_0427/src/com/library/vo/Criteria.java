@@ -39,6 +39,7 @@ public class Criteria {
 	}
 
 	public Criteria(String searchField, String searchWord, String pageNoStr) {
+		
 		if(searchWord != null) {
 			this.searchField = searchField;
 			this.searchWord = searchWord;			
@@ -56,6 +57,30 @@ public class Criteria {
 			}
 		}
 	}
+	
+	public Criteria(String searchField, String searchWord, String pageNoStr, String member) {
+		
+		this.amount = 5; // 한페이지당 보여질 게시물 수
+		this.endNo = 5; 
+		
+		if(searchWord != null) {
+			this.searchField = searchField;
+			this.searchWord = searchWord;			
+		}
+		
+		if(pageNoStr != null
+				&& !pageNoStr.equals("")) {
+			pageNo = Integer.parseInt(pageNoStr);
+			
+			if(pageNo > 0) {
+				endNo = pageNo * amount;
+				startNo = pageNo * amount - (amount - 1);
+			}else {
+				pageNo = 1;
+			}
+		}
+	}
+	
 
 	public String getSearchField() {
 		return searchField;

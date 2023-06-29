@@ -1,11 +1,17 @@
 package com.library.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.library.common.ConnectionUtil;
+import com.library.common.DBConnPool;
+import com.library.vo.Book;
+import com.library.vo.Criteria;
 import com.library.vo.Member;
 
 public class MemberDao {
@@ -111,6 +117,75 @@ public class MemberDao {
 		}
 		
 		return res;
+	}
+
+	public List<Member> getList(Criteria cri) {
+		List<Member> mlist = new ArrayList<>();
+		String sql="select * from ( select rownum rn, t.* from( select * from member ";
+		
+		if(!"".equals(cri.getSearchWord())&&cri.getSearchWord()!=null) {
+			sql += " where "+cri.getSearchField()+" like '%"+cri.getSearchWord()+"%'";
+		}
+		
+		sql += " ) t ) where rn between "+cri.getStartNo()+ " and "+cri.getEndNo();
+		
+		// System.out.println(sql);
+		
+		try(Connection conn = DBConnPool.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(sql);) {
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				Member mem = new Member();
+				mem.setId(rs.getString(2));
+				mem.setName(rs.getString(4));
+				mem.setAdminyn(rs.getString(5));
+				mem.setStatus(rs.getString(6));
+				mem.setGrade(rs.getString(7));
+				
+				mlist.add(mem);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return mlist;
+	}
+
+	/**
+	 * 총건수
+	 * @param cri
+	 * @return
+	 */
+	public int getTotalCnt(Criteria cri) {
+		int cnt = 0;
+		String sql="select count(*) from member";
+		
+		if(!"".equals(cri.getSearchWord())&&cri.getSearchWord()!=null) {
+			sql += " where "+cri.getSearchField()+" like '%"+cri.getSearchWord()+"%'";
+		}
+		
+		// System.out.println(sql);
+		
+		try(Connection conn = DBConnPool.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(sql);) {
+			ResultSet rs = psmt.executeQuery();
+			
+			rs.next();
+			
+			cnt = rs.getInt(1);
+			
+			rs.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return cnt;
 	}
 }
 

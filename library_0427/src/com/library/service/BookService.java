@@ -52,6 +52,26 @@ public class BookService {
 		return res;
 	}
 
+
+	/**
+	 * 도서 정보 입력
+	 * @param book
+	 */
+	public int write(Book book) {
+		// TODO Auto-generated method stub
+		int res = dao.insert(book);
+		
+		if(res > 0) {
+			System.out.println(res + "건 입력 되었습니다.");
+		} else {
+			System.err.println("입력중 오류가 발생 하였습니다.");
+			System.err.println("관리자에게 문의 해주세요");
+		}
+		
+		return res;
+	}
+	
+	
 	public int delete(String delNo) {
 		int res = dao.delete(delNo);
 		if(res>0) {
@@ -63,37 +83,28 @@ public class BookService {
 		return res;
 	}
 
-	public void rentBook(int bookNo) {
-		// 대여가능한 도서인지 확인
-		String rentYN = dao.getRentYN(bookNo);
-		if("Y".equals(rentYN)) {
-			System.err.println("이미 대여중인 도서 입니다.");
-		} else if ("".equals(rentYN)) {
-			System.out.println("없는 도서 번호 입니다.");
-		}
-		
-		// 대여처리
-		int res = dao.update(bookNo, "Y");
-		
-		if(res>0) {
-			System.out.println(res + "건 대여 되었습니다.");
-		}else {
-			System.out.println("대여중 오류가 발생 하였습니다.");
-			System.out.println("관리자에게 문의 해주세요");
-		}
+	public int rentBook(Book book) {
+		int res=0;
+		res = dao.rentBook(book);
+		return res;
 	}
 
-	public void returnBook(int bookNo) {
+	public int returnBook(String no) {
+		int res = 0;
+		
 		// 반납가능한 도서인지 확인
-		String rentYN = dao.getRentYN(bookNo);
+		String rentYN = dao.getRentYN(no);
+		
 		if("N".equals(rentYN)) {
 			System.err.println("반납 가능한 상태가 아닙니다.");
+			return res;
 		} else if ("".equals(rentYN)) {
 			System.out.println("없는 도서 번호 입니다.");
+			return res;
 		}
 		
 		// 반납처리
-		int res = dao.update(bookNo, "N");
+		res = dao.returnBook(no);
 		
 		if(res>0) {
 			System.out.println(res + "건 반납 되었습니다.");
@@ -101,8 +112,16 @@ public class BookService {
 			System.out.println("반납 처리 중 오류가 발생 하였습니다.");
 			System.out.println("관리자에게 문의 해주세요");
 		}
+		return res;
 	}
 	
+	public Book viewBook(String no) {
+	
+		Book book = dao.selectBook(no);
+		
+		return book;
+	}
+
 }
 
 

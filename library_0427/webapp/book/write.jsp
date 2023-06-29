@@ -9,23 +9,25 @@
 <script type="text/javascript">
 	function validateForm(form) {
 		if(form.title.value=="") {
-			alert("작성자를 입력하세요.");
+			alert("제목을 입력하세요.");
             form.title.focus();
             return false;
 		}
 		if(form.author.value=="") {
-			alert("작성자를 입력하세요.");
+			alert("작가를 입력하세요.");
             form.author.focus();
             return false;
 		}
 	}
 </script>
+<link rel="stylesheet" href="./style.css"/>
 </head>
 <body>
+<%@include file="../common/header.jsp" %>
 <h2>도서등록</h2>
-<form name="insertFrm" method="get" action="./insert.book"
-      onsubmit="return validateForm(this);">
-<table border="1" width="100%">
+<form name="writeFrm" method="post" enctype="multipart/form-data"
+	action="./write.book" onsubmit="return validateForm(this);">
+<table border="1" width="90%">
     <tr>
         <td>제목</td>
         <td>
@@ -38,6 +40,12 @@
             <input type="text" name="author" style="width:90%;" />
         </td>
     </tr>
+    
+    <tr>
+    	<td>책 이미지</td>
+    	<td><input type="file" name="bookImg"></td>
+    </tr>
+    
     <tr>
         <td colspan="2" align="center">
             <button type="submit">작성 완료</button>

@@ -6,18 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <header>
-	<!-- 어드민 -->
+	userId : ${userId } / adminYN : ${sessionScope.adminYN }
+ 	<!-- 어드민 -->
 	<c:if test="${sessionScope.adminYN eq 'Y'}" var="res">
 		<div>로고</div>
 		<div>
-			<a href="">도서관리</a>
+			<a href="../book/list.book">도서관리</a>
 		</div>
-		<a href="">사용자관리</a>
-		<div>로그아웃</div>
+		<a href="../member/memberlist.member">사용자관리</a>
+		<div> <a href="../logout.jsp">로그아웃</a></div>
 	</c:if>
 	<!-- 어드민 끝 -->
 	

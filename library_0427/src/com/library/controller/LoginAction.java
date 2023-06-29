@@ -60,19 +60,20 @@ public class LoginAction extends HttpServlet {
 			session.setAttribute("member", member);
 			session.setAttribute("userId", member.getId());
 			System.out.println(member.getId()+"님 환영합니다.");
-
+			
 			//out.print(mem + "님 환영합니다.");
 			if("Y".equals(member.getAdminyn())){
 				// 관리자인 경우 adminYN = Y
 				session.setAttribute("adminYN", "Y");
 				// 관리자 페이지 호출
+				
 			}
-			response.sendRedirect("../book/list.book");
+				response.sendRedirect("../book/list.book");				
 			//request.getRequestDispatcher("../book/list.book").forward(request, response);
 		} else{
 			// 로그인 실패
 			// 로그인 화면으로 이동
-			response.sendRedirect("login.jsp?error=Y");
+			response.sendRedirect("../login.jsp?error=Y");
 		}
 	}
 }

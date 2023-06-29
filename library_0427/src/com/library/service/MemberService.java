@@ -1,7 +1,15 @@
 package com.library.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.library.dao.MemberDao;
+import com.library.vo.Book;
+import com.library.vo.Criteria;
 import com.library.vo.Member;
+import com.library.vo.memPageDto;
+import com.library.vo.pageDto;
 
 public class MemberService {
 	MemberDao dao = new MemberDao();
@@ -63,6 +71,28 @@ public class MemberService {
 			System.out.println("아이디가 중복 되었습니다.");
 		}
 		return res;
+	}
+
+	public Map<String, Object> getList(Criteria cri) {
+		// 맵 생성
+		Map<String, Object> map = new HashMap<>();
+	
+		// 리스트 조회
+		List<Member> mlist = dao.getList(cri);
+		map.put("mlist", mlist);
+		
+		// 총 건수
+		int totalCnt = dao.getTotalCnt(cri);
+		map.put("totalCnt", totalCnt);
+		
+		// 페이지DTO
+		memPageDto pageDto = new memPageDto(totalCnt, cri);
+		map.put("pageDto", pageDto);
+		
+		System.out.println("endNo"+pageDto.getEndNo());
+		System.out.println("realEnd"+pageDto.getRealEnd());
+		
+		return map;
 	}
 	
 	

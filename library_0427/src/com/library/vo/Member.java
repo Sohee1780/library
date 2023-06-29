@@ -8,6 +8,9 @@ public class Member {
 	private String status;
 	private String grade;
 	
+	public Member() {
+		
+	}
 	
 	public Member(String id, String pw, String name, String adminyn, String status, String grade) {
 		super();

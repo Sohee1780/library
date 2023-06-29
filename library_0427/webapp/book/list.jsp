@@ -6,38 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-*{
-    padding: 0;
-    margin: 0;
-}
-
-body{
-	margin: 0 auto;
-	width:500px;
-	border: 1px solid black;
-}
-header{
-	border: 1px solid black;
-	width:500px;
-	height:50px;
-	line-height:50px;
-	display:flex;
-	justify-content:space-between;
-}
-main{
-	border: 1px solid red;
-}
-
-.right{
-	text-align:right;
-}
-
-.center{
-	text-align:center;
-}
-</style>
-
 <script type="text/javascript">
 	let message='${message}';
 	if(message!=null&&""!=message){
@@ -62,8 +30,8 @@ main{
 		
 		searchForm.submit();
 	}
-	
 </script>
+<link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
@@ -86,7 +54,7 @@ main{
 		<tr>
 			<td colspan="5" class="right">
 			<!-- 어드민 계정인 경우 등록, 삭제버튼을 출력 -->
-			<button onclick="location.href='insert.jsp'">도서등록</button>
+			<button onclick="location.href='../book/write.book'">도서등록</button>
 			<button onclick="deleteBook()">도서삭제</button>
 			</td>
 		</tr>
@@ -96,7 +64,7 @@ main{
 		<th width="5%"></th>
 		<th width="20%">제목</th>
 		<th width="10%">저자</th>
-		<th width="20%">대여여부/반납일</th>
+		<th width="20%">대여여부/반납예정일</th>
 		<th width="20%">등록일</th>
 	</tr>
 	
@@ -114,7 +82,12 @@ main{
 				<td><input type="checkbox" name="delNo" value="${book.no }"></td>
 				<td><a href="../book/view.book?no=${book.no}">${book.title }</a></td>
 				<td>${book.author }</td>
-				<td>${book.rentyn }</td>
+				<td>
+					<c:if test="${book.rentyn eq 'Y'}" var="res">
+						대여중 / ${book.endDate }
+					</c:if>
+					<c:if test="${not res }">대여가능</c:if>
+				</td>
 				<td></td>
 			</tr>
 			</c:forEach>
@@ -128,5 +101,6 @@ main{
 		</td>
 	</tr>
 </table>
+
 </body>
 </html>
